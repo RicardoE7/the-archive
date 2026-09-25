@@ -1,0 +1,131 @@
+<main class="form-page">
+  <div class="breadcrumb">
+    <a href="/books">THE COLLECTION</a>
+    <span>/</span>
+    <span><%= isEdit ? 'EDIT VOLUME' : 'NEW VOLUME' %></span>
+  </div>
+
+  <div class="form-layout">
+    <div class="form-intro">
+      <p class="eyebrow">
+        <%= isEdit
+          ? '02 / REVISE THE RECORD'
+          : '02 / GROW YOUR COLLECTION' %>
+      </p>
+
+      <h1>
+        <%= isEdit ? 'A story,' : 'A new story' %><br>
+        <em><%= isEdit ? 'revisited.' : 'begins here.' %></em>
+      </h1>
+
+      <p>
+        <%= isEdit
+          ? 'Every good library evolves. Give this volume the details it deserves.'
+          : 'The best collections aren’t built in a day. They grow one unforgettable book at a time.' %>
+      </p>
+
+      <div class="form-decoration" aria-hidden="true">✳</div>
+    </div>
+
+    <div class="form-panel">
+      <div class="form-panel-heading">
+        <span>
+          <%= isEdit
+            ? 'THE ARCHIVE / UPDATE RECORD'
+            : 'THE ARCHIVE / CREATE RECORD' %>
+        </span>
+        <span>✳</span>
+      </div>
+
+      <h2><%= isEdit ? 'Edit volume' : 'Add a volume' %></h2>
+      <p class="panel-subtitle">
+        <%= isEdit
+          ? 'Make a change to this book’s place in your archive.'
+          : 'Tell us about the next addition to your collection.' %>
+      </p>
+
+      <form
+        action="<%= isEdit ? '/books/' + book._id + '?_method=PUT' : '/books' %>"
+        method="POST"
+      >
+        <div class="field">
+          <label for="title">
+            <span>01</span>
+            BOOK TITLE
+          </label>
+          <input
+            id="title"
+            name="title"
+            type="text"
+            required
+            maxlength="200"
+            placeholder="e.g. The Secret History"
+            value="<%= isEdit ? book.title : '' %>"
+          >
+        </div>
+
+        <div class="field">
+          <label for="author">
+            <span>02</span>
+            AUTHOR
+          </label>
+          <input
+            id="author"
+            name="author"
+            type="text"
+            required
+            maxlength="160"
+            placeholder="e.g. Donna Tartt"
+            value="<%= isEdit ? book.author : '' %>"
+          >
+        </div>
+
+        <fieldset class="status-field">
+          <legend><span>03</span> READING STATUS</legend>
+
+          <div class="choice-grid">
+            <label class="status-choice">
+              <input
+                type="radio"
+                name="completed"
+                value="off"
+                <%= !isEdit || !book.completed ? 'checked' : '' %>
+              >
+              <span class="choice-body">
+                <span class="choice-icon">◯</span>
+                <strong>TO READ</strong>
+                <small>On the shelf for later</small>
+              </span>
+            </label>
+
+            <label class="status-choice">
+              <input
+                type="radio"
+                name="completed"
+                value="on"
+                <%= isEdit && book.completed ? 'checked' : '' %>
+              >
+              <span class="choice-body">
+                <span class="choice-icon">✳</span>
+                <strong>FINISHED</strong>
+                <small>A story well travelled</small>
+              </span>
+            </label>
+          </div>
+        </fieldset>
+
+        <button type="submit" class="primary-button full-button">
+          <%= isEdit ? 'SAVE CHANGES' : 'ADD TO THE ARCHIVE' %>
+          <span aria-hidden="true">↗</span>
+        </button>
+
+        <a
+          class="cancel-link"
+          href="<%= isEdit ? '/books/' + book._id : '/books' %>"
+        >
+          ← &nbsp; CANCEL & RETURN
+        </a>
+      </form>
+    </div>
+  </div>
+</main>

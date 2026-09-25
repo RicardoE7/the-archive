@@ -1,0 +1,24 @@
+<% const palettes =
+[['#473b2d','#a0875b'],['#243d3b','#89a89b'],['#49302f','#bd8572'],['#313e51','#8ca5c7'],['#483c52','#b2a0c3'],['#514633','#b7a074']];
+const idx = typeof coverIndex !== 'undefined' ? coverIndex :
+[...String(book._id)].reduce((n,c)=>n+c.charCodeAt(0),0); const ink=palettes[idx
+% palettes.length]; %>
+<div
+  class="book-cover"
+  style="--cover-bg: <%= ink[0] %>; --cover-accent: <%= ink[1] %>"
+  aria-hidden="true"
+>
+  <div class="cover-spine"></div>
+  <div class="cover-inner">
+    <div class="cover-top">THE ARCHIVE <span>✳</span> SELECTED WORKS</div>
+    <div class="cover-symbol">✳</div>
+    <div class="cover-titles">
+      <span class="cover-rule"></span><strong><%= book.title %></strong
+      ><span class="cover-rule"></span><small><%= book.author %></small>
+    </div>
+    <div class="cover-bottom">
+      A PRIVATE COLLECTION <span>◆</span> VOL. <%= String((idx %
+      90)+1).padStart(2,'0') %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,103 @@
+<%- include('partials/head', { pageTitle: book.title }) %>
+
+<main class="detail-page">
+  <div class="breadcrumb">
+    <a href="/books">THE COLLECTION</a>
+    <span>/</span>
+    <span>VOLUME DETAIL</span>
+  </div>
+
+  <div class="detail-layout">
+    <div class="detail-art">
+      <div class="detail-halo"></div>
+      <%- include('partials/cover', { book }) %>
+      <span class="detail-caption">
+        A STORY WORTH KEEPING &nbsp; ✳ &nbsp; THE ARCHIVE
+      </span>
+    </div>
+
+    <div class="detail-copy">
+      <p class="eyebrow">THE ARCHIVE / VOLUME RECORD</p>
+      <div class="detail-ornament">✳</div>
+
+      <h1><%= book.title %><span>.</span></h1>
+      <p class="detail-byline">
+        Written by <em><%= book.author %></em>
+      </p>
+
+      <div class="detail-rule"></div>
+
+      <div class="detail-facts">
+        <div>
+          <span>01 / AUTHOR</span>
+          <strong><%= book.author %></strong>
+        </div>
+
+        <div>
+          <span>02 / READING STATUS</span>
+          <strong class="detail-status">
+            <i class="status-dot <%= book.completed ? 'done' : '' %>"></i>
+            <%= book.completed ? 'Finished reading' : 'Waiting to be read' %>
+          </strong>
+        </div>
+
+        <div>
+          <span>03 / COLLECTION</span>
+          <strong>The Archive</strong>
+        </div>
+      </div>
+
+      <div class="detail-actions">
+        <a href="/books/<%= book._id %>/edit" class="primary-button">
+          EDIT THIS VOLUME <span aria-hidden="true">↗</span>
+        </a>
+
+        <button
+          type="button"
+          class="delete-trigger"
+          data-delete-title="<%= book.title %>"
+          data-delete-action="/books/<%= book._id %>?_method=DELETE"
+        >
+          REMOVE FROM ARCHIVE
+        </button>
+      </div>
+
+      <a class="back-link" href="/books">
+        ← &nbsp; BACK TO ALL VOLUMES
+      </a>
+    </div>
+  </div>
+</main>
+
+<div
+  id="delete-dialog"
+  class="modal"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="dialog-title"
+  hidden
+>
+  <div class="modal-panel">
+    <span class="eyebrow">THE ARCHIVE / FINAL PAGE</span>
+    <h2 id="dialog-title">Remove this <em>volume?</em></h2>
+
+    <p>
+      <span id="delete-book-name"></span>
+      will be permanently removed from your collection.
+    </p>
+
+    <div class="modal-actions">
+      <button type="button" id="cancel-delete" class="quiet-button">
+        KEEP VOLUME
+      </button>
+
+      <form id="delete-form" method="POST">
+        <button type="submit" class="danger-button">
+          REMOVE VOLUME ↗
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<%- include('partials/foot') %>
